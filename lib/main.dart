@@ -1,28 +1,45 @@
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:explore/utils/authentication.dart';
+import 'package:explore/utils/theme_data.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'welcome_screen.dart';
-import 'home_screen.dart';
-import 'signup_screen.dart';
-import 'login_screen.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
+import 'screens/home_page.dart';
+
+void main() {
+  runApp(
+    EasyDynamicThemeWidget(
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Future getUserInfo() async {
+    await getUser();
+    setState(() {});
+    print(uid);
+  }
+
+  @override
+  void initState() {
+    getUserInfo();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: 'welcome_screen',
-      routes: {
-        'welcome_screen': (context) => WelcomeScreen(),
-        'registration_screen': (context) => RegistrationScreen(),
-        'login_screen': (context) => LoginScreen(),
-        'home_screen': (context) => HomeScreen()
-      },
+      title: 'Explore',
+      theme: lightThemeData,
+      darkTheme: darkThemeData,
+      debugShowCheckedModeBanner: false,
+      themeMode: EasyDynamicTheme.of(context).themeMode,
+      home: HomePage(),
     );
   }
 }
