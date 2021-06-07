@@ -1,6 +1,7 @@
-import 'package:explore/screens/home_page.dart';
-import 'package:explore/utils/authentication.dart';
 import 'package:flutter/material.dart';
+
+import 'package:followmy_voyage/screens/map_page.dart';
+import 'package:followmy_voyage/utils/authentication.dart';
 
 class GoogleButton extends StatefulWidget {
   @override
@@ -40,7 +41,7 @@ class _GoogleButtonState extends State<GoogleButton> {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   fullscreenDialog: true,
-                  builder: (context) => HomePage(),
+                  builder: (context) => MapPage(),
                 ),
               );
             }

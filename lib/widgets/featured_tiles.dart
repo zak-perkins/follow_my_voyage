@@ -1,5 +1,6 @@
-import 'package:explore/widgets/responsive.dart';
 import 'package:flutter/material.dart';
+
+import 'package:followmy_voyage/widgets/responsive.dart';
 
 class FeaturedTiles extends StatelessWidget {
   FeaturedTiles({
@@ -15,7 +16,7 @@ class FeaturedTiles extends StatelessWidget {
     'assets/images/photography.jpeg',
   ];
 
-  final List<String> title = ['Trekking', 'Animals', 'Photography'];
+  final List<String> title = ['Trekking', 'Climbing', 'Sailing'];
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,8 @@
-import 'package:explore/widgets/bottom_bar_column.dart';
-import 'package:explore/widgets/info_text.dart';
-import 'package:explore/widgets/responsive.dart';
 import 'package:flutter/material.dart';
+
+import 'package:followmy_voyage/widgets/bottom_bar_column.dart';
+import 'package:followmy_voyage/widgets/info_text.dart';
+import 'package:followmy_voyage/widgets/responsive.dart';
 
 class BottomBar extends StatelessWidget {
   @override

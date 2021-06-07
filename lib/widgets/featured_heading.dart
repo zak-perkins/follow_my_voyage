@@ -1,5 +1,6 @@
-import 'package:explore/widgets/responsive.dart';
 import 'package:flutter/material.dart';
+
+import 'package:followmy_voyage/widgets/responsive.dart';
 
 class FeaturedHeading extends StatelessWidget {
   const FeaturedHeading({
@@ -24,7 +25,7 @@ class FeaturedHeading extends StatelessWidget {
               children: [
                 Row(),
                 Text(
-                  'Featured',
+                  'Features',
                   style: TextStyle(
                     fontSize: 24,
                     fontFamily: 'Montserrat',
@@ -33,7 +34,7 @@ class FeaturedHeading extends StatelessWidget {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  'Unique wildlife tours & destinations',
+                  'Share your experiences',
                   textAlign: TextAlign.end,
                   style: Theme.of(context).primaryTextTheme.subtitle1,
                 ),
@@ -45,7 +46,7 @@ class FeaturedHeading extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  'Featured',
+                  'Feature',
                   style: TextStyle(
                     fontSize: 40,
                     fontFamily: 'Montserrat',
@@ -54,7 +55,7 @@ class FeaturedHeading extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    'Unique wildlife tours & destinations',
+                    'Share your experiences',
                     textAlign: TextAlign.end,
                     style: Theme.of(context).primaryTextTheme.subtitle1,
                   ),

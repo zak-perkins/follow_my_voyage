@@ -1,9 +1,9 @@
-import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
-import 'package:explore/utils/authentication.dart';
-import 'package:explore/utils/theme_data.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 
-import 'screens/home_page.dart';
+import 'package:followmy_voyage/utils/authentication.dart';
+import 'package:followmy_voyage/utils/theme_data.dart';
+import 'package:followmy_voyage/screens/home_page.dart';
 
 void main() {
   runApp(

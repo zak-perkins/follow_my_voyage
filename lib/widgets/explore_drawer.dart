@@ -1,6 +1,7 @@
-import 'package:explore/screens/home_page.dart';
-import 'package:explore/utils/authentication.dart';
 import 'package:flutter/material.dart';
+
+import 'package:followmy_voyage/screens/home_page.dart';
+import 'package:followmy_voyage/utils/authentication.dart';
 
 import 'auth_dialog.dart';
 

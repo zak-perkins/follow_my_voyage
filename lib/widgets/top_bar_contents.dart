@@ -1,8 +1,10 @@
-import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
-import 'package:explore/screens/home_page.dart';
-import 'package:explore/utils/authentication.dart';
-import 'package:explore/widgets/auth_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+
+import 'package:followmy_voyage/screens/home_page.dart';
+import 'package:followmy_voyage/utils/authentication.dart';
+import 'package:followmy_voyage/widgets/auth_dialog.dart';
+
 
 class TopBarContents extends StatefulWidget {
   final double opacity;

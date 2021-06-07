@@ -1,15 +1,16 @@
-import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
-import 'package:explore/widgets/web_scrollbar.dart';
-import 'package:explore/widgets/bottom_bar.dart';
-import 'package:explore/widgets/carousel.dart';
-import 'package:explore/widgets/destination_heading.dart';
-import 'package:explore/widgets/explore_drawer.dart';
-import 'package:explore/widgets/featured_heading.dart';
-import 'package:explore/widgets/featured_tiles.dart';
-import 'package:explore/widgets/floating_quick_access_bar.dart';
-import 'package:explore/widgets/responsive.dart';
-import 'package:explore/widgets/top_bar_contents.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+
+import 'package:followmy_voyage/widgets/web_scrollbar.dart';
+import 'package:followmy_voyage/widgets/bottom_bar.dart';
+import 'package:followmy_voyage/widgets/carousel.dart';
+import 'package:followmy_voyage/widgets/destination_heading.dart';
+import 'package:followmy_voyage/widgets/explore_drawer.dart';
+import 'package:followmy_voyage/widgets/featured_heading.dart';
+import 'package:followmy_voyage/widgets/featured_tiles.dart';
+import 'package:followmy_voyage/widgets/floating_quick_access_bar.dart';
+import 'package:followmy_voyage/widgets/responsive.dart';
+import 'package:followmy_voyage/widgets/top_bar_contents.dart';
 
 class HomePage extends StatefulWidget {
   static const String route = '/';
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
               title: Text(
-                'EXPLORE',
+                'FollowMy.Voyage',
                 style: TextStyle(
                   color: Colors.blueGrey[100],
                   fontSize: 20,
