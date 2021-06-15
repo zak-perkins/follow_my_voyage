@@ -1,11 +1,11 @@
 {
-    "name": "explore",
-    "short_name": "explore",
+    "name": "follow_my_voyage",
+    "short_name": "follow_my_voyage",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "FollowMy.Voyage Travel Diary",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
