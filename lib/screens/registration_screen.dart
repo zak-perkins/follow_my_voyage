@@ -1,10 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
+import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:follow_my_voyage/constants.dart';
-import 'package:follow_my_voyage/widgets/signin_button.dart';
-import 'comments_screen.dart';
+import 'package:follow_my_voyage/widgets/onboard_button.dart';
+import 'map_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static String id = 'registration_screen';
@@ -61,6 +62,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             OnboardButton(
               title: 'Sign Up',
               color: Colors.blueAccent,
+              icon: const Icon(CupertinoIcons.person_add),
               onPressed: () async {
                 setState(() {
                   showSpinner = true;
@@ -68,7 +70,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 try {
                   final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
                   if(newUser != null) {
-                    Navigator.pushNamed(context, CommentsScreen.id);
+                    Navigator.pushNamed(context, MapScreen.id);
                   }
                   setState(() {
                     showSpinner = false;

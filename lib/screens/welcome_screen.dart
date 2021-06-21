@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
 
-import 'package:follow_my_voyage/widgets/signin_button.dart';
+import 'package:follow_my_voyage/widgets/onboard_button.dart';
 import 'login_screen.dart';
 import 'registration_screen.dart';
 
@@ -18,7 +18,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
 
     var screenSize = MediaQuery.of(context).size;
-    var tileWidth = (screenSize.width / 4) - 10.0;
+    var tileWidth = (screenSize.width / 4) - 15.0;
 
     return Scaffold(
       appBar: AppBar(
@@ -31,7 +31,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         actions: <Widget>[
           IconButton(
             tooltip: 'Sign Up',
-            icon: Icon(CupertinoIcons.person_add),
+            icon: const Icon(CupertinoIcons.person_add),
             onPressed: () {
               Navigator.pushNamed(context, RegistrationScreen.id);
             },
@@ -41,7 +41,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
           IconButton(
             tooltip: 'Sign In',
-            icon: Icon(CupertinoIcons.person_circle),
+            icon: const Icon(CupertinoIcons.person_circle), // CupertinoIcons.person_circle,
             onPressed: () {
               Navigator.pushNamed(context, LoginScreen.id);
             },
@@ -87,6 +87,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     OnboardButton(
                       title: 'Sign Up',
                       color: Colors.lightBlueAccent,
+                      icon: Icon(CupertinoIcons.person_add),
                       onPressed: () {
                         Navigator.pushNamed(context, RegistrationScreen.id);
                       },
@@ -97,6 +98,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     OnboardButton(
                       title: 'Sign In',
                       color: Colors.lightBlue,
+                      icon: Icon(CupertinoIcons.person_circle),
                       onPressed: () {
                         Navigator.pushNamed(context, LoginScreen.id);
                       },
@@ -110,31 +112,63 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  Container(
                     width: tileWidth,
-                    child: Text(
+                    height: 180.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("images/animals.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
                       'One',
                       style: TextStyle(
                         fontSize: 26.0,
                         fontWeight: FontWeight.w900,
-                        color: Colors.white30,
+                        color: Colors.white38,
                       ),
+                     ),
                     ),
                   ),
                   SizedBox(
+                    width: 5.0,
+                  ),
+                  Container(
                     width: tileWidth,
-                    child: Text(
+                    height: 180.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("images/photography.jpeg"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
                       'Two',
                       style: TextStyle(
-                        fontSize: 26.0,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white30,
+                      fontSize: 26.0,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white30,
                       ),
+                     ),
                     ),
                   ),
                   SizedBox(
+                    width: 5.0,
+                  ),
+                  Container(
                     width: tileWidth,
-                    child: Text(
+                    height: 180.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("images/trekking.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
                       'Three',
                       style: TextStyle(
                         fontSize: 26.0,
@@ -142,17 +176,31 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         color: Colors.white30,
                       ),
                     ),
+                   ),
                   ),
-                  SizedBox(
-                    width: tileWidth,
-                    child: Text(
-                      'Four',
-                      style: TextStyle(
-                        fontSize: 26.0,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white30,
-                      ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                Container(
+                  width: tileWidth,
+                  height: 180.0,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("images/animals.jpg"),
+                      fit: BoxFit.cover,
                     ),
+                  ),
+                  child: Center(
+                    child: Text(
+                    'Four',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 26.0,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white30,
+                    ),
+                    ),
+                   ),
                   ),
                 ],
               ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:follow_my_voyage/screens/login_screen.dart';
 import 'package:follow_my_voyage/screens/registration_screen.dart';
 import 'package:follow_my_voyage/screens/welcome_screen.dart';
-import 'package:follow_my_voyage/screens/comments_screen.dart';
+import 'package:follow_my_voyage/screens/map_screen.dart';
 
 void main() => runApp(FlashChat());
 
@@ -22,7 +22,7 @@ class FlashChat extends StatelessWidget {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
-        CommentsScreen.id: (context) => CommentsScreen(),
+        MapScreen.id: (context) => MapScreen(),
          },
     );
     }

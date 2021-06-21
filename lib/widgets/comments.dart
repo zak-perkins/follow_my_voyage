@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:follow_my_voyage/constants.dart';
-import 'welcome_screen.dart';
+import 'package:follow_my_voyage/screens/welcome_screen.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
