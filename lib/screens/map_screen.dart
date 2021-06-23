@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
-import 'package:latlng/latlng.dart';
-
+import 'package:latlong2/latlong.dart';
 //import 'package:follow_my_voyage/constants.dart';
-import 'package:follow_my_voyage/widgets/zoom.dart';
+import 'package:follow_my_voyage/util/zoom.dart';
 import 'welcome_screen.dart';
 
-//final _firestore = FirebaseFirestore.instance;
+final _firestore = FirebaseFirestore.instance;
 
 class MapScreen extends StatefulWidget {
   static String id = 'map_screen';
@@ -19,9 +19,8 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final _auth = FirebaseAuth.instance;
-  final messageTextController = TextEditingController();
+
   User loggedInUser;
-  String messageText;
 
   @override
   void initState() {
@@ -40,6 +39,67 @@ class _MapScreenState extends State<MapScreen> {
       print(e);
     }
   }
+
+  @override
+  var markers = <Marker>[
+    Marker( // 1
+      width: 34.0,
+      height: 34.0,
+      point: LatLng(37.746795,  -122.455659),
+      builder: (ctx) => Container(
+        child: FloatingActionButton(
+          onPressed: () {
+
+          },
+          tooltip: 'Marker',
+          child: Icon(Icons.maps_ugc_outlined),
+        ),
+      ),
+    ),
+    Marker( // 2
+      width: 34.0,
+      height: 34.0,
+      point: LatLng(37.731795,  -122.48778),
+      builder: (ctx) => Container(
+        child: FloatingActionButton(
+          onPressed: () {
+
+          },
+          tooltip: 'Marker',
+          child: Icon(Icons.maps_ugc_outlined),
+        ),
+      ),
+    ),
+    Marker( // 3
+      width: 34.0,
+      height: 34.0,
+      point: LatLng(37.735795, -122.423879),
+      builder: (ctx) => Container(
+        child: FloatingActionButton(
+          onPressed: () {
+
+          },
+          tooltip: 'Marker',
+          child: Icon(Icons.maps_ugc_outlined),
+        ),
+      ),
+    ),
+    Marker( // 4
+      width: 34.0,
+      height: 34.0,
+      point: LatLng(37.732795, -122.458244),
+      builder: (ctx) => Container(
+        child: FloatingActionButton(
+          onPressed: () {
+
+          },
+          tooltip: 'Marker',
+          child: Icon(Icons.maps_ugc_outlined),
+        ),
+      ),
+    ),
+  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +124,8 @@ class _MapScreenState extends State<MapScreen> {
           Flexible(
             child: FlutterMap(
               options: MapOptions(
-                //center: LatLng(51.5, -0.09),
-                zoom: 5.0,
+                center: LatLng(37.733795, -122.446747),
+                zoom: 13.0,
                 plugins: [
                   ZoomButtonsPlugin(),
                 ],
@@ -73,14 +133,14 @@ class _MapScreenState extends State<MapScreen> {
               layers: [
                 TileLayerOptions(
                   urlTemplate:
-                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                   subdomains: ['a', 'b', 'c'],
                   // For example purposes. It is recommended to use
                   // TileProvider with a caching and retry strategy, like
                   // NetworkTileProvider or CachedNetworkTileProvider
                   tileProvider: NonCachingNetworkTileProvider(),
                 ),
-                //MarkerLayerOptions(markers: markers)
+                MarkerLayerOptions(markers: markers)
               ], //Layers
               nonRotatedLayers: [
                 ZoomButtonsPluginOption(
@@ -93,8 +153,76 @@ class _MapScreenState extends State<MapScreen> {
               ],
             ),
           ),
+          Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MarkersStream(),
+              ]),
         ],
       ),
+    );
+  }
+}
+
+class MarkersStream extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+        stream: _firestore.collection('markers').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+          return ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            children: snapshot.data.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data = document.data();
+              print(data);
+              return Pins(data['post'], data['position']);
+            }).toList(),
+          );
+        });
+  }
+}
+
+class Pins extends StatelessWidget {
+  Pins(this.post, this.position);
+
+  final String post;
+  final GeoPoint position;
+
+  @override
+  Widget build(BuildContext context) {
+    print(position.latitude);
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Container(
+        height: 30.0,
+        width: 50.0,
+        child:
+            Text('$post Lat ${position.latitude} Long ${position.longitude}'),
+      ), /*Material(
+                borderRadius: BorderRadius.circular(30.0),
+                elevation: 5.0,
+                color: Colors.lightBlueAccent,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 30.0),
+                  child: Text(
+                    '$position',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ),
+              ),*/
     );
   }
 }
