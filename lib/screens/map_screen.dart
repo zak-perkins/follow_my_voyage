@@ -21,12 +21,13 @@ class _MapScreenState extends State<MapScreen> {
   final _auth = FirebaseAuth.instance;
 
   User loggedInUser;
+  List<Marker> markers = [];
 
   @override
   void initState() {
     super.initState();
-
     getCurrentUser();
+    getMarkerList();
   }
 
   void getCurrentUser() {
@@ -39,14 +40,20 @@ class _MapScreenState extends State<MapScreen> {
       print(e);
     }
   }
+  //List<Marker> markers = [];
 
-  @override
-  var markers = <Marker>[
+  void getMarkerList() async {
+    markers = await getMarkers();
+    print(markers[0]);
+  }
+
+  /*var markers = <Marker>[
     Marker( // 1
       width: 34.0,
       height: 34.0,
       point: LatLng(37.746795,  -122.455659),
       builder: (ctx) => Container(
+
         child: FloatingActionButton(
           onPressed: () {
 
@@ -99,7 +106,7 @@ class _MapScreenState extends State<MapScreen> {
       ),
     ),
   ];
-
+*/
 
   @override
   Widget build(BuildContext context) {
@@ -124,8 +131,8 @@ class _MapScreenState extends State<MapScreen> {
           Flexible(
             child: FlutterMap(
               options: MapOptions(
-                center: LatLng(37.733795, -122.446747),
-                zoom: 13.0,
+                center: LatLng(-33.8688, 151.2093),
+                zoom: 10.0,
                 plugins: [
                   ZoomButtonsPlugin(),
                 ],
@@ -140,7 +147,7 @@ class _MapScreenState extends State<MapScreen> {
                   // NetworkTileProvider or CachedNetworkTileProvider
                   tileProvider: NonCachingNetworkTileProvider(),
                 ),
-                MarkerLayerOptions(markers: markers)
+                MarkerLayerOptions(markers: markers),
               ], //Layers
               nonRotatedLayers: [
                 ZoomButtonsPluginOption(
@@ -157,7 +164,7 @@ class _MapScreenState extends State<MapScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MarkersStream(),
+               // MarkersStream(),
               ]),
         ],
       ),
@@ -190,6 +197,50 @@ class MarkersStream extends StatelessWidget {
         });
   }
 }
+//final List l = ['asdf','asdf'];
+//var a = l.add('asdfsdfds');
+
+Future<List<Marker>> getMarkers() async {
+  QuerySnapshot result= await _firestore.collection('markers').get();
+  List<Marker> markers = [];
+
+  for (DocumentSnapshot result in result.docs) {
+   // print(result['position'].latitude);
+    // print(result['position'].longitude);
+     markers.add(
+         Marker(
+           point: LatLng(
+             result['position'].latitude,
+             result['position'].longitude,
+           ),
+           builder: (ctx) => Container(
+             child: FloatingActionButton(
+               onPressed: () {
+
+               },
+               tooltip: 'Marker',
+               child: Icon(Icons.circle),
+             ),
+           ),
+         ),
+         /*Marker(
+      width: 34.0,
+      height: 34.0,
+      point: LatLng(result['position'].latitude,  result['position'].longitude),
+      builder: (ctx) => Container(
+        child: FloatingActionButton(
+          onPressed: () {
+            print(result['post']);
+          },
+          tooltip: 'Marker',
+          child: Icon(Icons.maps_ugc_outlined),
+        ),
+      ),*/
+    );
+  }
+  return markers;
+}
+
 
 class Pins extends StatelessWidget {
   Pins(this.post, this.position);
