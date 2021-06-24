@@ -205,22 +205,18 @@ Future<List<Marker>> getMarkers() async {
   List<Marker> markers = [];
 
   for (DocumentSnapshot result in result.docs) {
-   // print(result['position'].latitude);
-    // print(result['position'].longitude);
+    print(result['position'].latitude);
+     print(result['position'].longitude);
      markers.add(
          Marker(
            point: LatLng(
              result['position'].latitude,
              result['position'].longitude,
            ),
-           builder: (ctx) => Container(
-             child: FloatingActionButton(
-               onPressed: () {
-
-               },
-               tooltip: 'Marker',
-               child: Icon(Icons.circle),
-             ),
+           builder: (context) => const Icon(
+             Icons.circle,
+             color: Colors.red,
+             size: 18.0,
            ),
          ),
          /*Marker(
