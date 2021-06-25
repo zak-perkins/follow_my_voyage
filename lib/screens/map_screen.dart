@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
+
 //import 'package:follow_my_voyage/constants.dart';
 import 'package:follow_my_voyage/util/zoom.dart';
 import 'welcome_screen.dart';
@@ -40,73 +42,13 @@ class _MapScreenState extends State<MapScreen> {
       print(e);
     }
   }
+
   //List<Marker> markers = [];
 
   void getMarkerList() async {
     markers = await getMarkers();
     print(markers[0]);
   }
-
-  /*var markers = <Marker>[
-    Marker( // 1
-      width: 34.0,
-      height: 34.0,
-      point: LatLng(37.746795,  -122.455659),
-      builder: (ctx) => Container(
-
-        child: FloatingActionButton(
-          onPressed: () {
-
-          },
-          tooltip: 'Marker',
-          child: Icon(Icons.maps_ugc_outlined),
-        ),
-      ),
-    ),
-    Marker( // 2
-      width: 34.0,
-      height: 34.0,
-      point: LatLng(37.731795,  -122.48778),
-      builder: (ctx) => Container(
-        child: FloatingActionButton(
-          onPressed: () {
-
-          },
-          tooltip: 'Marker',
-          child: Icon(Icons.maps_ugc_outlined),
-        ),
-      ),
-    ),
-    Marker( // 3
-      width: 34.0,
-      height: 34.0,
-      point: LatLng(37.735795, -122.423879),
-      builder: (ctx) => Container(
-        child: FloatingActionButton(
-          onPressed: () {
-
-          },
-          tooltip: 'Marker',
-          child: Icon(Icons.maps_ugc_outlined),
-        ),
-      ),
-    ),
-    Marker( // 4
-      width: 34.0,
-      height: 34.0,
-      point: LatLng(37.732795, -122.458244),
-      builder: (ctx) => Container(
-        child: FloatingActionButton(
-          onPressed: () {
-
-          },
-          tooltip: 'Marker',
-          child: Icon(Icons.maps_ugc_outlined),
-        ),
-      ),
-    ),
-  ];
-*/
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +82,7 @@ class _MapScreenState extends State<MapScreen> {
               layers: [
                 TileLayerOptions(
                   urlTemplate:
-                  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                   subdomains: ['a', 'b', 'c'],
                   // For example purposes. It is recommended to use
                   // TileProvider with a caching and retry strategy, like
@@ -164,13 +106,51 @@ class _MapScreenState extends State<MapScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-               // MarkersStream(),
+                // MarkersStream(),
               ]),
         ],
       ),
+
     );
   }
 }
+
+Future<List<Marker>> getMarkers() async {
+  QuerySnapshot result = await _firestore.collection('markers').get();
+  List<Marker> markers = [];
+
+  for (DocumentSnapshot result in result.docs) {
+    print(result['position'].latitude);
+    print(result['position'].longitude);
+    markers.add(
+      Marker(
+        point: LatLng(
+          result['position'].latitude,
+          result['position'].longitude,
+        ),
+        builder: (context) => Container(
+          child: FloatingActionButton(
+            onPressed: () {
+              print(result['post']);
+            },
+            backgroundColor: Colors.lightBlueAccent,
+            child:  ImageIcon(
+              AssetImage("images/pin.png"),
+              size: 22,
+            ),
+            /*const Icon(
+              Icons.circle,
+              color: Colors.red,
+              size: 12.0,
+            ),*/
+          ),
+        ),
+      ),
+    );
+  }
+  return markers;
+}
+/*
 
 class MarkersStream extends StatelessWidget {
   @override
@@ -197,46 +177,6 @@ class MarkersStream extends StatelessWidget {
         });
   }
 }
-//final List l = ['asdf','asdf'];
-//var a = l.add('asdfsdfds');
-
-Future<List<Marker>> getMarkers() async {
-  QuerySnapshot result= await _firestore.collection('markers').get();
-  List<Marker> markers = [];
-
-  for (DocumentSnapshot result in result.docs) {
-    print(result['position'].latitude);
-     print(result['position'].longitude);
-     markers.add(
-         Marker(
-           point: LatLng(
-             result['position'].latitude,
-             result['position'].longitude,
-           ),
-           builder: (context) => const Icon(
-             Icons.circle,
-             color: Colors.red,
-             size: 18.0,
-           ),
-         ),
-         /*Marker(
-      width: 34.0,
-      height: 34.0,
-      point: LatLng(result['position'].latitude,  result['position'].longitude),
-      builder: (ctx) => Container(
-        child: FloatingActionButton(
-          onPressed: () {
-            print(result['post']);
-          },
-          tooltip: 'Marker',
-          child: Icon(Icons.maps_ugc_outlined),
-        ),
-      ),*/
-    );
-  }
-  return markers;
-}
-
 
 class Pins extends StatelessWidget {
   Pins(this.post, this.position);
@@ -254,7 +194,7 @@ class Pins extends StatelessWidget {
         width: 50.0,
         child:
             Text('$post Lat ${position.latitude} Long ${position.longitude}'),
-      ), /*Material(
+      ), Material(
                 borderRadius: BorderRadius.circular(30.0),
                 elevation: 5.0,
                 color: Colors.lightBlueAccent,
@@ -269,7 +209,8 @@ class Pins extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),*/
+              ),
     );
   }
 }
+*/
