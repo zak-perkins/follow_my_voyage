@@ -5,8 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:location/location.dart';
 
-//import 'package:follow_my_voyage/constants.dart';
+import 'package:follow_my_voyage/constants.dart';
 import 'package:follow_my_voyage/util/zoom.dart';
 import 'welcome_screen.dart';
 
@@ -21,6 +22,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final _auth = FirebaseAuth.instance;
+  LocationData _locationData;
 
   User loggedInUser;
   List<Marker> markers = [];
@@ -30,6 +32,12 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
     getCurrentUser();
     getMarkerList();
+    getLocation();
+  }
+
+  void getLocation() async {
+    final Location location = new Location();
+    _locationData = await location.getLocation();
   }
 
   void getCurrentUser() {
@@ -43,15 +51,15 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
-  //List<Marker> markers = [];
-
   void getMarkerList() async {
     markers = await getMarkers();
-    print(markers[0]);
+    print(markers.length);
   }
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _postController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         leading: null,
@@ -63,7 +71,7 @@ class _MapScreenState extends State<MapScreen> {
                 Navigator.pushNamed(context, WelcomeScreen.id);
               }),
         ],
-        title: Text(''),
+        title: Text('FollowMy.Voyage'),
         backgroundColor: Colors.transparent,
       ),
       body: Column(
@@ -108,9 +116,54 @@ class _MapScreenState extends State<MapScreen> {
               children: [
                 // MarkersStream(),
               ]),
+          IconButton(
+              icon: Icon(CupertinoIcons.map_pin),
+              onPressed: () {
+                final double lat = _locationData.latitude;
+                final double lng = _locationData.longitude;
+                print('$lat $lng');
+                showDialog(
+                  context: context,
+                  builder: (_) =>
+                      AlertDialog(title: Text('Add Marker'), actions: <Widget>[
+                    Column(
+                      children: [
+                        Container(
+                          width: 280.0,
+                          padding:
+                              const EdgeInsetsDirectional.only(start: 16.0, end: 16.0),
+                          child: TextField(
+                            keyboardType: TextInputType.text,
+                            controller: _postController,
+                            maxLines: 8,
+                            decoration: kTextFieldDecoration.copyWith(
+                                hintText: 'Marker Post'),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 38.0,
+                        ),
+                        Container(
+                          width: 280.0,
+                          padding:
+                              const EdgeInsetsDirectional.only(start: 16.0),
+                          child: IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: () {
+                                Map<String, dynamic> data = <String, dynamic>{
+                                  "post": _postController.text,
+                                  "position": GeoPoint(lat, lng),
+                                };
+                                _firestore.collection('markers').add(data);
+                              }),
+                        ),
+                      ],
+                    ),
+                  ]),
+                );
+              }),
         ],
       ),
-
     );
   }
 }
@@ -120,8 +173,6 @@ Future<List<Marker>> getMarkers() async {
   List<Marker> markers = [];
 
   for (DocumentSnapshot result in result.docs) {
-    print(result['position'].latitude);
-    print(result['position'].longitude);
     markers.add(
       Marker(
         point: LatLng(
@@ -134,15 +185,10 @@ Future<List<Marker>> getMarkers() async {
               print(result['post']);
             },
             backgroundColor: Colors.lightBlueAccent,
-            child:  ImageIcon(
+            child: ImageIcon(
               AssetImage("images/pin.png"),
               size: 22,
             ),
-            /*const Icon(
-              Icons.circle,
-              color: Colors.red,
-              size: 12.0,
-            ),*/
           ),
         ),
       ),
